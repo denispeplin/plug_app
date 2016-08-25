@@ -3,7 +3,11 @@ defmodule PlugApp do
   import Plug.Conn
 
   def start(_type, _args) do
-    {:ok, _} = Plug.Adapters.Cowboy.http PlugApp, []
+    children = [Plug.Adapters.Cowboy.child_spec(:http, PlugApp, [])]
+
+    opts = [strategy: :one_for_one, name: PlugApp.Supervisor]
+
+    Supervisor.start_link(children, opts)
   end
 
   def init(options) do
