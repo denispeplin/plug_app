@@ -1,0 +1,2 @@
+defmodule PlugApp do
+end
